@@ -1,0 +1,15 @@
+
+PODS:
+- FMDB (2.0x)
+
+DEPENDENCIES:
+- FMDB (from `https://github.com/Dan2552/fmdb.git')
+
+EXTERNAL SOURCES:
+  FMDB:
+    :git: https://github.com/Dan2552/fmdb.git
+
+SPEC CHECKSUMS:
+  FMDB: 65353c889399f5fb1391e700c3dea6f37b627624
+
+COCOAPODS: 0.16.4
