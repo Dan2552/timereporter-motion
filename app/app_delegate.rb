@@ -1,14 +1,21 @@
 class AppDelegate
-  MODELS = [Hello]
+  @@nui_settings = NUISettings.initWithStylesheet("theme")
+  MODELS = [TimeEntry, User]
 
   def application(application, didFinishLaunchingWithOptions:launchOptions)
+    @nui = NUIAppearance.init
+
+    ModelSync::Store.host = "http://Daniel.local:3000"
+
     setup_database
     setup_window
     true
   end
 
   def setup_database
-    MotionModel::Store.config(MotionModel::FMDBAdapter.new('test.db'))
+    db = 'data.db'
+    db = 'test.db' if RUBYMOTION_ENV == 'test'
+    MotionModel::Store.config(MotionModel::FMDBAdapter.new(db))
     MODELS.each do |model|
       model.create_table unless model.table_exists?
     end

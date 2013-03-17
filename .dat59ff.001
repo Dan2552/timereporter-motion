@@ -1,0 +1,129 @@
+ModelSync::Base.columns
+xeit
+exit
+Hello.fetchIndex
+Hello.fetchIndex
+Hello.fetchIndex
+exi
+exit
+Hello.fetchIndex
+Hello.fetchIndex
+exit
+TimeEntry.fetchIndex
+TimeEntry.fetchIndex
+TimeEntry.fetchIndex
+exit
+exit
+User.get(:sign_in)
+exit
+User
+User.get(:sign_in)
+User.get(:sign_in)
+User.fetchIndex
+exit
+User.fetch(:sign_in)
+exit
+User.fetch(:sign_in)
+exit
+User.fetch(:sign_in)
+User.first
+exit
+exit
+ModelSync::NetworkClient.shared_instance
+exit
+ModelSync::NetworkClient.shared_instance
+exit
+ModelSync::NetworkClient.shared_instance
+User.get(:sign_in)
+ModelSync::NetworkClient.shared_instance
+c
+ModelSync::NetworkClient.shared_instance
+ModelSync::NetworkClient.shared_instance
+exit
+TimeEntry.get(:index)
+exit
+TimeEntry.get(:index)
+exit
+User.get(:sign_in)
+exit
+"#E6E6E6".to_c
+exit
+User.get(:sign_in"
+User.get(:sign_in)
+exit
+exit
+exit
+exit
+exit
+exit
+exit
+exit
+exit
+exit
+exit
+exit
+exit
+exit
+exit
+exit
+exit
+exit
+ModelSync::Network
+ModelSync::Network.public_methods
+Object.public_methods
+ModelSync::Network.public_methods - Object.public_methods
+ModelSync::Network.get
+ModelSync::Network.get ModelSync::Routing.action(User, :sign_in)
+ModelSync::Network.get(ModelSync::Routing.action(User, :sign_in))
+ModelSync::Network.get(nil)
+exit
+ModelSync::Network.get(nil)
+exit
+ModelSync::Network.get(nil)
+exit
+ModelSync::Network.get ModelSync::Routing.action(User, :sign_in)
+exit
+ModelSync::Network.get ModelSync::Routing.action(User, :sign_in)
+exit
+ModelSync::Network.get ModelSync::Routing.action(User, :sign_in)
+exit
+ModelSync::Network.get ModelSync::Routing.action(User, :sign_in)
+ModelSync::Network.get ModelSync::Routing.action(User, :sign_in)
+ModelSync::Network.get ModelSync::Routing.action(User, :sign_in)
+exit
+exit
+User.class
+User.is_a? Class
+User.first.is_a? Class
+User.first.to_hash
+User.first.to_hash
+User.first.payload
+exit
+User.first.payload
+User.first.payload.to_json
+Json.generate(User.first.payload)
+BW::Json.generate(User.first.payload)
+BW::JSON.generate(User.first.payload)
+exit
+NSURLConnection.canHandleRequest(NSURLRequest.requestWithURL(url))
+url = http://localhost:3000/users/sign_in.json
+url = "http://localhost:3000/users/sign_in.json"
+NSURLConnection.canHandleRequest(NSURLRequest.requestWithURL(url))
+url = NSURL.URLWithString(url)
+NSURLConnection.canHandleRequest(NSURLRequest.requestWithURL(url))
+rake debug=1
+rake simulator debug=1
+exit
+App::Persistence['csrf']
+exit
+App::Persistence['password']
+exit
+edxit
+exit
+"banaA".lowercase
+"banaA".downcase
+exit
+exit
+exit
+exit
+exit

@@ -3,6 +3,51 @@
 
 #import "Stubs.h"
 
+@implementation Camera
+
+@end
+
+
+@implementation ParserError
+
+@end
+
+
+@implementation NSNotificationCenter
+
+@end
+
+
+@implementation NSURLRequest
+
+@end
+
+
+@implementation UIView
+
+@end
+
+
+@implementation UIViewController
+
+@end
+
+
+@implementation Response
+
+@end
+
+
+@implementation Query
+
+@end
+
+
+@implementation InvalidURLError
+
+@end
+
+
 @implementation ValidationSpecificationError
 
 @end
@@ -108,7 +153,22 @@
 @end
 
 
+@implementation Relation
+
+@end
+
+
+@implementation Join
+
+@end
+
+
 @implementation FMDBAdapter
+
+@end
+
+
+@implementation Transaction
 
 @end
 
@@ -123,17 +183,247 @@
 @end
 
 
+@implementation AnimationChain
+
+@end
+
+
+@implementation CLLocationCoordinate2D
+
+@end
+
+
+@implementation String
+
+@end
+
+
+@implementation SugarNotFoundException
+
+@end
+
+
+@implementation Fixnum
+
+@end
+
+
+@implementation NSArray
+
+@end
+
+
+@implementation NSCoder
+
+@end
+
+
+@implementation NSDate
+
+@end
+
+
+@implementation NSIndexPath
+
+@end
+
+
+@implementation IndexPath
+
+@end
+
+
+@implementation NSIndexSet
+
+@end
+
+
+@implementation NSString
+
+@end
+
+
+@implementation NSString
+
+@end
+
+
+@implementation NSURL
+
+@end
+
+
+@implementation NSUserDefaults
+
+@end
+
+
+@implementation Object
+
+@end
+
+
+@implementation NilClass
+
+@end
+
+
+@implementation NSArray
+
+@end
+
+
+@implementation NSDictionary
+
+@end
+
+
+@implementation Numeric
+
+@end
+
+
+@implementation Symbol
+
+@end
+
+
+@implementation Numeric
+
+@end
+
+
+@implementation NSError
+
+@end
+
+
+@implementation NSLayoutConstraint
+
+@end
+
+
+@implementation NSSet
+
+@end
+
+
+@implementation UIColor
+
+@end
+
+
+@implementation UIEvent
+
+@end
+
+
+@implementation UITouch
+
+@end
+
+
+@implementation UIViewController
+
+@end
+
+
+@implementation UIActionSheet
+
+@end
+
+
+@implementation UIActivityIndicatorView
+
+@end
+
+
+@implementation UIAlertView
+
+@end
+
+
+@implementation UIBarButtonItem
+
+@end
+
+
+@implementation UIButton
+
+@end
+
+
+@implementation UIColor
+
+@end
+
+
+@implementation UIControl
+
+@end
+
+
+@implementation UIImage
+
+@end
+
+
+@implementation UISegmentedControl
+
+@end
+
+
+@implementation UITextView
+
+@end
+
+
+@implementation UIView
+
+@end
+
+
+@implementation UIViewController
+
+@end
+
+
+@implementation UINavigationController
+
+@end
+
+
+@implementation UITabBarController
+
+@end
+
+
 @implementation AppDelegate
 
 @end
 
 
-@implementation HelloController
+@implementation TimeEntriesController
 
 @end
 
 
-@implementation Fetcher
+@implementation UserController
+
+@end
+
+
+@implementation Base
+
+@end
+
+
+@implementation TimeEntry
+
+@end
+
+
+@implementation User
 
 @end
 

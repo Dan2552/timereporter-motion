@@ -5,6 +5,131 @@
 #import <CoreData/CoreData.h>
 #import <UIKit/UIKit.h>
 
+@interface Camera
+
+
+
+
+
+-(IBAction) imagePickerControllerDidCancel:(id) picker;
+-(IBAction) picker;
+-(IBAction) dismiss;
+-(IBAction) camera_device;
+-(IBAction) media_type_to_symbol:(id) media_type;
+-(IBAction) symbol_to_media_type:(id) symbol;
+-(IBAction) error:(id) type;
+-(IBAction) load_constants_hack;
+
+@end
+
+
+@interface ParserError: StandardError
+
+
+
+
+
+
+
+@end
+
+
+@interface NSNotificationCenter
+
+
+
+
+
+-(IBAction) observers;
+-(IBAction) unobserve:(id) observer;
+
+@end
+
+
+@interface NSURLRequest
+
+
+
+
+
+-(IBAction) to_s;
+
+@end
+
+
+@interface UIView
+
+
+
+
+
+-(IBAction) handle_gesture:(id) recognizer;
+
+@end
+
+
+@interface UIViewController
+
+
+
+
+
+-(IBAction) content_frame;
+
+@end
+
+
+@interface Response
+
+
+
+
+
+-(IBAction) update:(id) values;
+-(IBAction) to_s;
+-(IBAction) update_status_description;
+
+@end
+
+
+@interface Query
+
+
+
+
+
+-(IBAction) to_s;
+-(IBAction) connectionDidFinishLoading:(id) connection;
+-(IBAction) create_request;
+-(IBAction) set_content_type;
+-(IBAction) create_request_body;
+-(IBAction) append_payload:(id) body;
+-(IBAction) append_form_params:(id) body;
+-(IBAction) append_files:(id) body;
+-(IBAction) append_body_boundary:(id) body;
+-(IBAction) create_url:(id) url_string;
+-(IBAction) validate_url:(id) url;
+-(IBAction) escape:(id) string;
+-(IBAction) convert_payload_to_url;
+-(IBAction) log:(id) message;
+-(IBAction) escape_line_feeds:(id) hash;
+-(IBAction) patch_nsurl_request:(id) request;
+-(IBAction) call_delegator_with_response;
+
+@end
+
+
+@interface InvalidURLError: StandardError
+
+
+
+
+
+
+
+@end
+
+
 @interface ValidationSpecificationError: RuntimeError
 
 
@@ -102,6 +227,9 @@
 
 -(IBAction) generate_belongs_to_id:(id) relation;
 -(IBAction) column_type:(id) column;
+-(IBAction) has_many_columns;
+-(IBAction) has_one_columns;
+-(IBAction) belongs_to_columns;
 -(IBAction) default:(id) column;
 -(IBAction) read:(id) attrs;
 -(IBAction) destroy_all;
@@ -109,11 +237,12 @@
 -(IBAction) last;
 -(IBAction) column_from_hash:(id) hash;
 -(IBAction) column_from_string_or_sym:(id) string;
--(IBAction) define_accessor_methods:(id) name;
 -(IBAction) define_belongs_to_methods:(id) name;
 -(IBAction) define_has_many_methods:(id) name;
+-(IBAction) define_has_one_methods:(id) name;
 -(IBAction) column_named:(id) name;
 -(IBAction) attributes;
+-(IBAction) update_attributes:(id) attrs;
 -(IBAction) read_attribute:(id) name;
 -(IBAction) to_i;
 -(IBAction) to_s;
@@ -122,7 +251,6 @@
 -(IBAction) destroy;
 -(IBAction) columns;
 -(IBAction) options:(id) column_name;
--(IBAction) has_many_columns;
 -(IBAction) issue_notification:(id) info;
 
 @end
@@ -284,8 +412,8 @@
 
 
 -(IBAction) table_name;
--(IBAction) select:(id) columns;
 -(IBAction) order:(id) options;
+-(IBAction) group:(id) column;
 -(IBAction) limit:(id) limit;
 -(IBAction) all;
 -(IBAction) to_a;
@@ -293,13 +421,16 @@
 -(IBAction) first;
 -(IBAction) count;
 -(IBAction) delete;
+-(IBAction) to_sql;
+-(IBAction) to_sql_sq;
+-(IBAction) execute;
 -(IBAction) select_str;
+-(IBAction) joins_str;
 -(IBAction) order_str;
+-(IBAction) group_str;
 -(IBAction) limit_str;
 -(IBAction) options_str;
 -(IBAction) type;
--(IBAction) execute;
--(IBAction) to_sql;
 
 @end
 
@@ -315,15 +446,68 @@
 @end
 
 
+@interface Relation
+
+
+
+
+
+-(IBAction) scoped;
+-(IBAction) to_a;
+-(IBAction) reload;
+-(IBAction) collection;
+-(IBAction) instance;
+-(IBAction) init_instance:(id) instance;
+-(IBAction) build_from_instance:(id) associated_instance;
+
+@end
+
+
+@interface Join
+
+
+
+
+
+-(IBAction) joined_table_name;
+-(IBAction) joining_table_name;
+-(IBAction) joined_table_key;
+-(IBAction) joining_table_key;
+-(IBAction) type;
+-(IBAction) on_str;
+-(IBAction) build_on_str;
+-(IBAction) to_sql_str;
+-(IBAction) select:(id) scope;
+
+@end
+
+
 @interface FMDBAdapter: SQLite3Adapter
 
 
 
 
 
+
+
+@end
+
+
+@interface Transaction
+
+
+
+
+
+-(IBAction) initialize:(id) db;
+-(IBAction) begin_transaction;
+-(IBAction) end_transaction;
+-(IBAction) commit;
+-(IBAction) rollback;
 -(IBAction) db_path;
 -(IBAction) db;
 -(IBAction) execute_sql:(id) sql;
+-(IBAction) queue;
 
 @end
 
@@ -354,6 +538,629 @@
 @end
 
 
+@interface AnimationChain
+
+
+
+
+
+-(IBAction) chains;
+-(IBAction) start_chain:(id) chain;
+-(IBAction) stop_chain:(id) chain;
+-(IBAction) initialize;
+-(IBAction) wait:(id) duration;
+-(IBAction) do_next;
+-(IBAction) start;
+-(IBAction) stop;
+-(IBAction) abort;
+
+@end
+
+
+@interface CLLocationCoordinate2D
+
+
+
+
+
+-(IBAction) distance_to:(id) cl_location_2d;
+
+@end
+
+
+@interface String
+
+
+
+
+
+-(IBAction) to_date;
+-(IBAction) to_timezone;
+-(IBAction) to_duration;
+
+@end
+
+
+@interface SugarNotFoundException: Exception
+
+
+
+
+
+
+
+@end
+
+
+@interface Fixnum
+
+
+
+
+
+-(IBAction) nth;
+-(IBAction) ordinalize;
+-(IBAction) before:(id) date;
+-(IBAction) ago;
+-(IBAction) after:(id) date;
+-(IBAction) hence;
+
+@end
+
+
+@interface NSArray
+
+
+
+
+
+-(IBAction) to_pointer:(id) type;
+-(IBAction) nsindexpath;
+-(IBAction) nsindexset;
+
+@end
+
+
+@interface NSCoder
+
+
+
+
+
+-(IBAction) bool:(id) key;
+-(IBAction) double:(id) key;
+-(IBAction) float:(id) key;
+-(IBAction) int:(id) key;
+-(IBAction) point:(id) key;
+-(IBAction) rect:(id) key;
+-(IBAction) size:(id) key;
+
+@end
+
+
+@interface NSDate
+
+
+
+
+
+-(IBAction) string_with_format:(id) format;
+-(IBAction) timezone;
+-(IBAction) era;
+-(IBAction) utc_offset;
+-(IBAction) date_array;
+-(IBAction) time_array;
+-(IBAction) datetime_array;
+-(IBAction) start_of_day;
+-(IBAction) end_of_day;
+-(IBAction) start_of_month;
+-(IBAction) end_of_month;
+-(IBAction) days_in_month;
+-(IBAction) days_in_year;
+
+@end
+
+
+@interface NSIndexPath
+
+
+
+
+
+-(IBAction) to_a;
+
+@end
+
+
+@interface IndexPath
+
+
+
+
+
+-(IBAction) initialize:(id) values;
+
+@end
+
+
+@interface NSIndexSet
+
+
+
+
+
+-(IBAction) to_a;
+
+@end
+
+
+@interface NSString
+
+
+
+
+
+-(IBAction) nsurl;
+-(IBAction) uiimage;
+-(IBAction) uiimageview;
+-(IBAction) escape_url;
+-(IBAction) unescape_url;
+
+@end
+
+
+@interface NSString
+
+
+
+
+
+-(IBAction) document;
+-(IBAction) resource;
+-(IBAction) resource_url;
+-(IBAction) info_plist;
+
+@end
+
+
+@interface NSURL
+
+
+
+
+
+-(IBAction) open;
+
+@end
+
+
+@interface NSUserDefaults
+
+
+
+
+
+-(IBAction) remove:(id) key;
+
+@end
+
+
+@interface Object
+
+
+
+
+
+-(IBAction) to_nsuserdefaults;
+
+@end
+
+
+@interface NilClass
+
+
+
+
+
+-(IBAction) to_nsuserdefaults;
+
+@end
+
+
+@interface NSArray
+
+
+
+
+
+-(IBAction) to_nsuserdefaults;
+
+@end
+
+
+@interface NSDictionary
+
+
+
+
+
+-(IBAction) to_nsuserdefaults;
+
+@end
+
+
+@interface Numeric
+
+
+
+
+
+-(IBAction) percent;
+-(IBAction) radians;
+-(IBAction) in_radians;
+-(IBAction) degrees;
+-(IBAction) in_degrees;
+-(IBAction) pi;
+-(IBAction) meters;
+-(IBAction) in_meters;
+-(IBAction) kilometers;
+-(IBAction) in_kilometers;
+-(IBAction) miles;
+-(IBAction) in_miles;
+-(IBAction) feet;
+-(IBAction) in_feet;
+-(IBAction) bytes;
+-(IBAction) kilobytes;
+-(IBAction) megabytes;
+-(IBAction) gigabytes;
+-(IBAction) terabytes;
+-(IBAction) petabytes;
+-(IBAction) exabytes;
+
+@end
+
+
+@interface Symbol
+
+
+
+
+
+-(IBAction) look_in:(id) here;
+-(IBAction) uidevice;
+-(IBAction) uideviceorientation;
+-(IBAction) uiinterfaceorientation;
+-(IBAction) uiinterfacemask;
+-(IBAction) uitextalignment;
+-(IBAction) uilinebreakmode;
+-(IBAction) uibaselineadjustment;
+-(IBAction) uibuttontype;
+-(IBAction) uibordertype;
+-(IBAction) uicontrolstate;
+-(IBAction) uicontrolevent;
+-(IBAction) uireturnkey;
+-(IBAction) uiactivityindicatorstyle;
+-(IBAction) uisegmentedstyle;
+-(IBAction) uidatepickermode;
+-(IBAction) uicontentmode;
+-(IBAction) uitablestyle;
+-(IBAction) uitablerowanimation;
+-(IBAction) uitablecellstyle;
+-(IBAction) uitablecellaccessory;
+-(IBAction) uitablecellselectionstyle;
+-(IBAction) uitablecellseparatorstyle;
+-(IBAction) uistatusbarstyle;
+-(IBAction) uibarmetrics;
+-(IBAction) uibarbuttonitem;
+-(IBAction) uibarbuttonstyle;
+-(IBAction) uikeyboardtype;
+-(IBAction) uiautoresizemask;
+-(IBAction) uiimagesource;
+-(IBAction) uiimagecapture;
+-(IBAction) uiimagecamera;
+-(IBAction) uiimagequality;
+-(IBAction) catimingfunction;
+-(IBAction) cglinecap;
+-(IBAction) cglinejoin;
+-(IBAction) uigesturerecognizerstate;
+-(IBAction) uifontsize;
+-(IBAction) nsdatestyle;
+-(IBAction) nsnumberstyle;
+
+@end
+
+
+@interface Numeric
+
+
+
+
+
+-(IBAction) milliseconds;
+-(IBAction) in_milliseconds;
+-(IBAction) seconds;
+-(IBAction) in_seconds;
+-(IBAction) minutes;
+-(IBAction) in_minutes;
+-(IBAction) hours;
+-(IBAction) in_hours;
+-(IBAction) days;
+-(IBAction) in_days;
+-(IBAction) weeks;
+-(IBAction) in_weeks;
+-(IBAction) months;
+-(IBAction) in_months;
+-(IBAction) years;
+-(IBAction) in_years;
+
+@end
+
+
+@interface NSError
+
+
+
+
+
+-(IBAction) localized;
+-(IBAction) to_s;
+
+@end
+
+
+@interface NSLayoutConstraint
+
+
+
+
+
+-(IBAction) to_s;
+
+@end
+
+
+@interface NSSet
+
+
+
+
+
+-(IBAction) to_s;
+
+@end
+
+
+@interface UIColor
+
+
+
+
+
+-(IBAction) to_s;
+
+@end
+
+
+@interface UIEvent
+
+
+
+
+
+-(IBAction) to_s;
+
+@end
+
+
+@interface UITouch
+
+
+
+
+
+-(IBAction) to_s;
+
+@end
+
+
+@interface UIViewController
+
+
+
+
+
+-(IBAction) to_s;
+
+@end
+
+
+@interface UIActionSheet
+
+
+
+
+
+-(IBAction) dummy;
+
+@end
+
+
+@interface UIActivityIndicatorView
+
+
+
+
+
+-(IBAction) large;
+-(IBAction) white;
+-(IBAction) gray;
+
+@end
+
+
+@interface UIAlertView
+
+
+
+
+
+-(IBAction) dummy;
+
+@end
+
+
+@interface UIBarButtonItem
+
+
+
+
+
+-(IBAction) sugarcube_handle_action:(id) sender;
+
+@end
+
+
+@interface UIButton
+
+
+
+
+
+-(IBAction) custom;
+-(IBAction) rounded;
+-(IBAction) rounded_rect;
+-(IBAction) detail;
+-(IBAction) detail_disclosure;
+-(IBAction) info;
+-(IBAction) info_light;
+-(IBAction) info_dark;
+-(IBAction) contact;
+-(IBAction) contact_add;
+
+@end
+
+
+@interface UIColor
+
+
+
+
+
+-(IBAction) cgcolor;
+-(IBAction) invert;
+-(IBAction) red;
+-(IBAction) green;
+-(IBAction) blue;
+-(IBAction) alpha;
+-(IBAction) css_name;
+
+@end
+
+
+@interface UIControl
+
+
+
+
+
+-(IBAction) sugarcube_callbacks;
+
+@end
+
+
+@interface UIImage
+
+
+
+
+
+-(IBAction) uiimageview;
+-(IBAction) nsdata;
+-(IBAction) in_rect:(id) rect;
+-(IBAction) scale_to_fill:(id) new_size;
+-(IBAction) scale_within:(id) new_size;
+-(IBAction) scale_to:(id) new_size;
+-(IBAction) rotate:(id) angle_or_direction;
+-(IBAction) masked:(id) mask_image;
+-(IBAction) color_at:(id) point;
+-(IBAction) at_scale:(id) scale;
+
+@end
+
+
+@interface UISegmentedControl
+
+
+
+
+
+-(IBAction) plain:(id) items;
+-(IBAction) bordered:(id) items;
+-(IBAction) bar:(id) items;
+-(IBAction) bezeled:(id) items;
+
+@end
+
+
+@interface UITextView
+
+
+
+
+
+-(IBAction) sugarcube_callbacks;
+
+@end
+
+
+@interface UIView
+
+
+
+
+
+-(IBAction) first_responder;
+-(IBAction) controller;
+-(IBAction) unshift:(id) view;
+-(IBAction) show;
+-(IBAction) hide;
+
+@end
+
+
+@interface UIViewController
+
+
+
+
+
+-(IBAction) push:(id) view_controller;
+
+@end
+
+
+@interface UINavigationController
+
+
+
+
+
+-(IBAction) push:(id) view_controller;
+
+@end
+
+
+@interface UITabBarController
+
+
+
+
+
+-(IBAction) push:(id) view_controller;
+
+@end
+
+
 @interface AppDelegate
 
 
@@ -366,26 +1173,67 @@
 @end
 
 
-@interface HelloController: UIViewController
+@interface TimeEntriesController: UIViewController
 
-@property IBOutlet id btn_hello;
+@property IBOutlet id selected_date_label;
 
 
 
--(IBAction) say_hello:(id) sender;
+-(IBAction) viewDidAppear:(id) animated;
+-(IBAction) back_pressed;
+-(IBAction) forward_pressed;
+-(IBAction) update_date_label;
 
 @end
 
 
-@interface Fetcher
+@interface UserController: UIViewController
+
+@property IBOutlet id username_field;
+@property IBOutlet id password_field;
+
+
+
+-(IBAction) viewDidAppear:(id) animated;
+-(IBAction) login:(id) sender;
+-(IBAction) load_persisted_credentials;
+-(IBAction) save_persisted_credentials;
+-(IBAction) segue_to_time_entries;
+
+@end
+
+
+@interface Base
 
 
 
 
 
--(IBAction) initialize;
--(IBAction) fetch:(id) cls;
--(IBAction) do_something;
+-(IBAction) post:(id) action;
+-(IBAction) to_hash;
+-(IBAction) payload;
+
+@end
+
+
+@interface TimeEntry: ModelSync
+
+
+
+
+
+
+
+@end
+
+
+@interface User: ModelSync
+
+
+
+
+
+
 
 @end
 
