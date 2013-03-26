@@ -21,15 +21,15 @@ module ModelSync
     include MotionModel::FMDBModelAdapter
     include SyncableColumns
 
-    def self.get(action)
-      Network.get self, action do |response|
+    def self.get(params={})
+      Network.get self, params do |response|
         json = Json.parse(response.body.to_str)
         update_or_create(json)
       end
     end
 
-    def post(action)
-      Network.post self, action do |response|
+    def post(params={})
+      Network.post self, params do |response|
         json = Json.parse(response.body.to_str)
         json["id"] = self.id
         update_attributes(json)
@@ -40,7 +40,7 @@ module ModelSync
       remote_id = params[:remote_id] || params["remote_id"]
       puts "fetched with id: #{remote_id}"
 
-      remote = User.find_by :remote_id, remote_id
+      remote = find_by :remote_id, remote_id
 
       if remote
         remote.update_attributes(params)
@@ -63,7 +63,6 @@ module ModelSync
     def payload
       BW::JSON.generate({ self.class.to_s.downcase => Json.foreignize(to_hash) })
     end
-
   end
 
 
@@ -73,9 +72,10 @@ module ModelSync
     @@open_connections = 0
 
     [:get, :post, :put, :delete, :head, :patch].each do |http_verb|
-     define_singleton_method(http_verb) do |cls, action, &block|
+     define_singleton_method(http_verb) do |cls, params, &block|
         increment_open_connections
-        
+      
+        action = params[:action]
         url = Routing.action(cls, action)
 
         puts "target URL:"
@@ -119,12 +119,23 @@ module ModelSync
 
 
   class Routing
-    def self.action(cls, action)
+    def self.action(cls, params)  
+      action = params.delete(:action) || :index
       cls = cls.class unless cls.is_a? Class
       action_location = ""
       action_location = "/#{action}" unless action.to_sym == :index
-      action_location = "#{cls.to_s.pluralize.underscore}#{action_location}.json"
+      html_params = build_params params
+      action_location = "#{cls.to_s.pluralize.underscore}#{action_location}.json#{html_params}"
       "#{ModelSync::Store.host}/#{action_location}"
+    end
+
+    def self.build_params params
+      return "" if params.keys.count < 1
+      str = "?"
+      params.each_with_index do |(k, v), i| 
+        str = "#{str}#{i>0?"&":""}#{k}=#{v}"
+      end
+      str
     end
   end
 
