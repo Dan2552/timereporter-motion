@@ -28,11 +28,11 @@ module ModelSync
       end
     end
 
-    def post(params={})
+    def post(params={}, &success)
       Network.post self, params do |response|
         json = Json.parse(response.body.to_str)
         json["id"] = self.id
-        update_attributes(json)
+        success.call(update_attributes(json))
       end
     end
 
@@ -75,8 +75,7 @@ module ModelSync
      define_singleton_method(http_verb) do |cls, params, &block|
         increment_open_connections
       
-        action = params[:action]
-        url = Routing.action(cls, action)
+        url = Routing.action(cls, params)
 
         puts "target URL:"
         puts url
@@ -119,7 +118,9 @@ module ModelSync
 
 
   class Routing
-    def self.action(cls, params)  
+    def self.action(cls, params={})
+      params = { action: params } if params.is_a? Symbol
+
       action = params.delete(:action) || :index
       cls = cls.class unless cls.is_a? Class
       action_location = ""

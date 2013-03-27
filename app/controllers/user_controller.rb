@@ -24,7 +24,13 @@ class UserController < UIViewController
       user.email = username_field.text
       user.password = password_field.text
 
-      user.post(:sign_in)
+      user.post(:sign_in) do |success|
+        if success
+          segue_to_time_entries
+        else
+          App.alert("Something went wrong :(")
+        end
+      end
     else
       App.alert("Something went wrong :(")
     end
