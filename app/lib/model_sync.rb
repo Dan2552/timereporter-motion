@@ -21,24 +21,33 @@ module ModelSync
     include MotionModel::FMDBModelAdapter
     include SyncableColumns
 
-    def self.get(params={})
+    def self.get(params={}, &object)
       Network.get self, params do |response|
+        puts "GET--------"
+        puts response.body.to_str
+        puts "/GET-------"
         json = Json.parse(response.body.to_str)
-        update_or_create(json)
+        puts "json>> #{json}"
+        fetched_object = update_or_create(json)
+        object.call(fetched_object) if object
       end
     end
 
-    def post(params={}, &success)
+    def post(params={}, &object)
       Network.post self, params do |response|
         json = Json.parse(response.body.to_str)
         json["id"] = self.id
-        success.call(update_attributes(json))
+        fetched_object = update_attributes(json)
+        object.call(fetched_object) if object
       end
     end
 
     def self.update_or_create params
+      if params.is_a? Array
+        return params.map { |p| update_or_create(p) }
+      end
+
       remote_id = params[:remote_id] || params["remote_id"]
-      puts "fetched with id: #{remote_id}"
 
       remote = find_by :remote_id, remote_id
 
@@ -94,6 +103,8 @@ module ModelSync
             puts "RECIEVED CSRF-token : #{App::Persistence['csrf']}"
           end
           Network.decrement_open_connections
+          App.alert("401") if response.status_code == 401
+
           block.call(response)
         end
      end

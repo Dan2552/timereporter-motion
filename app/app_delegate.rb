@@ -5,7 +5,7 @@ class AppDelegate
   def application(application, didFinishLaunchingWithOptions:launchOptions)
     @nui = NUIAppearance.init
 
-    ModelSync::Store.host = "http://Daniel.local:3000"
+    #ModelSync::Store.host = "http://time.alliants.co.uk"
 
     setup_database
     setup_window

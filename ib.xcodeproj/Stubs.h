@@ -1169,6 +1169,7 @@
 
 -(IBAction) setup_database;
 -(IBAction) setup_window;
+-(IBAction) setup_cookies;
 
 @end
 
@@ -1176,6 +1177,7 @@
 @interface TimeEntriesController: UIViewController
 
 @property IBOutlet id selected_date_label;
+@property IBOutlet id calendar_view;
 
 
 
@@ -1183,6 +1185,7 @@
 -(IBAction) back_pressed;
 -(IBAction) forward_pressed;
 -(IBAction) update_date_label;
+-(IBAction) refresh_time_entries;
 
 @end
 
@@ -1196,6 +1199,7 @@
 
 -(IBAction) viewDidAppear:(id) animated;
 -(IBAction) login:(id) sender;
+-(IBAction) send_login;
 -(IBAction) load_persisted_credentials;
 -(IBAction) save_persisted_credentials;
 -(IBAction) segue_to_time_entries;
@@ -1209,7 +1213,6 @@
 
 
 
--(IBAction) post:(id) action;
 -(IBAction) to_hash;
 -(IBAction) payload;
 
@@ -1234,6 +1237,22 @@
 
 
 
+
+@end
+
+
+@interface CalendarGrid: UIView
+
+
+
+
+
+-(IBAction) initWithCoder:(id) coder;
+-(IBAction) drawRect:(id) rect;
+-(IBAction) grid;
+-(IBAction) time_labels;
+-(IBAction) hour_height;
+-(IBAction) half_hour_height;
 
 @end
 

@@ -8,35 +8,38 @@ class UserController < UIViewController
     super
     load_persisted_credentials
 
-    if is_logged_in?
-      segue_to_time_entries
-    else
-      User.delete_all
-      User.get(:sign_in)
+    logged_in_before = check_has_logged_in_before?
+    
+    User.delete_all
+    User.get(:sign_in) do |fetched|
+      send_login if logged_in_before
     end
   end
 
   def login(sender)
     save_persisted_credentials
 
-    user = User.first
-    if user
-      user.email = username_field.text
-      user.password = password_field.text
-
-      user.post(:sign_in) do |success|
-        if success
-          segue_to_time_entries
-        else
-          App.alert("Something went wrong :(")
-        end
-      end
+    if User.first
+      send_login
     else
       App.alert("Something went wrong :(")
     end
   end
 
   private
+
+  def send_login
+    user = User.first
+    user.email = username_field.text
+    user.password = password_field.text
+    user.post(:sign_in) do |success|
+      if success
+        segue_to_time_entries
+      else
+        App.alert("Something went wrong :(")
+      end
+    end
+  end
 
   def load_persisted_credentials
     username_field.text = App::Persistence['username']
@@ -48,7 +51,7 @@ class UserController < UIViewController
     App::Persistence['password'] = password_field.text
   end
 
-  def is_logged_in?
+  def check_has_logged_in_before?
     (User.count == 1 && User.first.email.length > 0)
   end
 

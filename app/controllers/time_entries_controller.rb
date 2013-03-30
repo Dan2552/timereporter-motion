@@ -1,14 +1,17 @@
 class TimeEntriesController < UIViewController
   extend IB
-
+  include TimeEntriesHelper
+  
   attr_accessor :selected_date
 
   outlet :selected_date_label
+  outlet :calendar_view
 
   def viewDidAppear(animated)
     super
     self.selected_date = NSDate.new
     update_date_label
+    refresh_time_entries
   end
 
   def back_pressed
@@ -25,8 +28,12 @@ class TimeEntriesController < UIViewController
     if self.selected_date.today?
       selected_date_label.text = "Today"
     else
-      selected_date_label.text = "Not today"
+      selected_date_label.text = formatted_date(selected_date)
     end
+  end
+
+  def refresh_time_entries
+    TimeEntry.get(date: formatted_date(selected_date))
   end
 
 end
