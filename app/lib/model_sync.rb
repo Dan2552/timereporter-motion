@@ -23,12 +23,16 @@ module ModelSync
 
     def self.get(params={}, &object)
       Network.get self, params do |response|
-        puts "GET--------"
-        puts response.body.to_str
-        puts "/GET-------"
-        json = Json.parse(response.body.to_str)
-        puts "json>> #{json}"
-        fetched_object = update_or_create(json)
+
+        fetched_object = false
+        if response.body
+          puts "GET--------"
+          puts response.body.to_str
+          puts "/GET-------"
+          json = Json.parse(response.body.to_str)
+          puts "json>> #{json}"
+          fetched_object = update_or_create(json)
+        end
         object.call(fetched_object) if object
       end
     end
@@ -98,12 +102,15 @@ module ModelSync
         }
 
         BW::HTTP.send http_verb, url, options do |response|
-          if response.headers.include? "X-Csrf-Token"
+          if response.headers && response.headers.include?("X-Csrf-Token")
             App::Persistence['csrf'] = response.headers["X-Csrf-Token"]
             puts "RECIEVED CSRF-token : #{App::Persistence['csrf']}"
           end
           Network.decrement_open_connections
-          App.alert("401") if response.status_code == 401
+          
+          if response.status_code == 401
+            Store.auth_action.call
+          end
 
           block.call(response)
         end
@@ -156,12 +163,21 @@ module ModelSync
 
 
   class Store
+
     def self.host= set_host
       @host = set_host
     end
 
     def self.host
       @host ||= "http://localhost:3000"
+    end
+
+    def self.auth_action= auth_action
+      @auth_action = auth_action
+    end
+
+    def self.auth_action
+      @auth_action || (-> {})
     end
   end
 

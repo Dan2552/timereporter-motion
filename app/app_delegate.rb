@@ -4,12 +4,15 @@ class AppDelegate
 
   def application(application, didFinishLaunchingWithOptions:launchOptions)
     @nui = NUIAppearance.init
-
-    #ModelSync::Store.host = "http://time.alliants.co.uk"
-
+    setup_sync
     setup_database
     setup_window
     true
+  end
+
+  def setup_sync
+    #ModelSync::Store.host = "http://time.alliants.co.uk"
+    ModelSync::Store.auth_action = -> { User.login }
   end
 
   def setup_database
