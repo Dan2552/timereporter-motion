@@ -428,7 +428,12 @@
 @end
 
 
-@implementation CalendarGrid
+@implementation CalendarGridView
+
+@end
+
+
+@implementation TimeEntryView
 
 @end
 

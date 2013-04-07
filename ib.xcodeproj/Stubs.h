@@ -1169,7 +1169,6 @@
 
 -(IBAction) setup_database;
 -(IBAction) setup_window;
--(IBAction) setup_cookies;
 
 @end
 
@@ -1241,18 +1240,32 @@
 @end
 
 
-@interface CalendarGrid: UIView
+@interface CalendarGridView: UIView
 
 
 
 
 
 -(IBAction) initWithCoder:(id) coder;
+-(IBAction) add_child;
 -(IBAction) drawRect:(id) rect;
 -(IBAction) grid;
 -(IBAction) time_labels;
 -(IBAction) hour_height;
 -(IBAction) half_hour_height;
+
+@end
+
+
+@interface TimeEntryView: UIView
+
+
+
+
+
+-(IBAction) initWithFrame:(id) frame;
+-(IBAction) drawRect:(id) rect;
+-(IBAction) load_xib;
 
 @end
 

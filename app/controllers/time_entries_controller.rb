@@ -11,6 +11,7 @@ class TimeEntriesController < UIViewController
     super
     self.selected_date = NSDate.new
     update_date_label
+    render_entries
     refresh_time_entries
   end
 
@@ -33,7 +34,13 @@ class TimeEntriesController < UIViewController
   end
 
   def refresh_time_entries
-    TimeEntry.get(date: formatted_date(selected_date))
+    TimeEntry.get(date: formatted_date(selected_date)) do |success|
+      render_entries
+    end
+  end
+
+  def render_entries
+    #calendar_view.draw_entry 
   end
 
 end

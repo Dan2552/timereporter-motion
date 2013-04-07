@@ -139,7 +139,7 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="Snp-f1-GDL">
                                 <rect key="frame" x="0.0" y="44" width="320" height="504"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" id="oun-zr-myv" customClass="CalendarGrid">
+                                    <view contentMode="scaleToFill" id="oun-zr-myv" customClass="CalendarGridView">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="1079"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                     </view>
@@ -183,9 +183,10 @@
         <image name="right_arrow.png" width="24" height="35"/>
     </resources>
     <classes>
-        <class className="CalendarGrid" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CalendarGrid.h"/>
+        <class className="CalendarGridView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CalendarGridView.h"/>
             <relationships>
+                <relationship kind="action" name="add_child"/>
                 <relationship kind="action" name="drawRect:"/>
                 <relationship kind="action" name="grid"/>
                 <relationship kind="action" name="half_hour_height"/>
