@@ -1,7 +1,7 @@
 class TimeEntriesController < UIViewController
   extend IB
   include TimeEntriesHelper
-  
+
   attr_accessor :selected_date
 
   outlet :selected_date_label
@@ -40,7 +40,7 @@ class TimeEntriesController < UIViewController
   end
 
   def render_entries
-    #calendar_view.draw_entry 
+    #calendar_view.draw_entry
   end
 
 end

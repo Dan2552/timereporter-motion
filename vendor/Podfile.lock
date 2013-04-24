@@ -1,11 +1,14 @@
-
 PODS:
-- FMDB (2.0x)
-- NUI (0.2.6)
+  - FMDB (2.0x)
+  - MLUIColorAdditions (1.0.0)
+  - NUI (0.2.6)
+  - TSMessages (0.9.1):
+    - MLUIColorAdditions
 
 DEPENDENCIES:
-- FMDB (from `https://github.com/Dan2552/fmdb.git')
-- NUI
+  - FMDB (from `https://github.com/Dan2552/fmdb.git`)
+  - NUI
+  - TSMessages
 
 EXTERNAL SOURCES:
   FMDB:
@@ -13,6 +16,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   FMDB: 65353c889399f5fb1391e700c3dea6f37b627624
+  MLUIColorAdditions: c128da8c87b724cdc6c9a1b4cfe8832ca62b8d2a
   NUI: 427a718b0d6919db1b9362baf59741d02a9090a5
+  TSMessages: 916e168ec96b90fbe2756bc4e28c555a2abc83fc
 
-COCOAPODS: 0.16.4
+COCOAPODS: 0.18.1

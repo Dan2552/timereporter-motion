@@ -63,11 +63,6 @@
 @end
 
 
-@implementation PersistFileError
-
-@end
-
-
 @implementation Model
 
 @end
@@ -84,6 +79,11 @@
 
 
 @implementation AdapterNotFoundError
+
+@end
+
+
+@implementation RecordNotSaved
 
 @end
 
@@ -108,32 +108,12 @@
 @end
 
 
-@implementation String
+@implementation Debug
 
 @end
 
 
-@implementation Inflector
-
-@end
-
-
-@implementation NilClass
-
-@end
-
-
-@implementation Array
-
-@end
-
-
-@implementation Hash
-
-@end
-
-
-@implementation Symbol
+@implementation Module
 
 @end
 
@@ -148,12 +128,37 @@
 @end
 
 
+@implementation SQLContext
+
+@end
+
+
+@implementation SQLDBAdapter
+
+@end
+
+
 @implementation SQLCondition
 
 @end
 
 
-@implementation Relation
+@implementation AbstractRelation
+
+@end
+
+
+@implementation CollectionRelation
+
+@end
+
+
+@implementation RelationArray
+
+@end
+
+
+@implementation InstanceRelation
 
 @end
 
@@ -173,12 +178,7 @@
 @end
 
 
-@implementation SQLContext
-
-@end
-
-
-@implementation SQLDBAdapter
+@implementation PersistFileError
 
 @end
 

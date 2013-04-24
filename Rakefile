@@ -5,6 +5,9 @@ require 'motion/project'
 require 'bundler'
 Bundler.require
 
+require 'motion_support'
+require 'motion_support/all'
+
 Motion::Project::App.setup do |app|
   # Use `rake config' to see complete project settings.
   app.name = 'TimereporterMotion'
@@ -13,6 +16,8 @@ Motion::Project::App.setup do |app|
   app.interface_orientations = [:portrait]
   app.pods do
     pod 'FMDB', :git => 'https://github.com/Dan2552/fmdb.git'
+    #pod 'SJNotificationViewController', :git => 'https://github.com/Dan2552/SJNotificationViewController.git'
     pod 'NUI'
+    pod 'TSMessages'
   end
 end

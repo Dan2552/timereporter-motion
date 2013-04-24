@@ -168,19 +168,6 @@
 @end
 
 
-@interface PersistFileError: Exception
-
-
-
-
-
--(IBAction) documents_file:(id) file_name;
--(IBAction) initWithCoder:(id) coder;
--(IBAction) encodeWithCoder:(id) coder;
-
-@end
-
-
 @interface Model
 
 
@@ -192,6 +179,7 @@
 -(IBAction) cast_to_float:(id) arg;
 -(IBAction) cast_to_date:(id) arg;
 -(IBAction) cast_to_array:(id) arg;
+-(IBAction) cast_to_hash:(id) arg;
 -(IBAction) cast_to_string:(id) arg;
 
 @end
@@ -225,11 +213,23 @@
 
 
 
+
+
+@end
+
+
+@interface RecordNotSaved: Exception
+
+
+
+
+
 -(IBAction) generate_belongs_to_id:(id) relation;
 -(IBAction) column_type:(id) column;
 -(IBAction) has_many_columns;
 -(IBAction) has_one_columns;
 -(IBAction) belongs_to_columns;
+-(IBAction) association_columns;
 -(IBAction) default:(id) column;
 -(IBAction) read:(id) attrs;
 -(IBAction) destroy_all;
@@ -241,16 +241,19 @@
 -(IBAction) define_has_many_methods:(id) name;
 -(IBAction) define_has_one_methods:(id) name;
 -(IBAction) column_named:(id) name;
+-(IBAction) column_as:(id) name;
+-(IBAction) object_identifier;
+-(IBAction) model_identifier;
 -(IBAction) attributes;
 -(IBAction) update_attributes:(id) attrs;
 -(IBAction) read_attribute:(id) name;
 -(IBAction) to_i;
 -(IBAction) to_s;
 -(IBAction) set_auto_date_field:(id) field_name;
--(IBAction) delete;
--(IBAction) destroy;
 -(IBAction) columns;
 -(IBAction) options:(id) column_name;
+-(IBAction) set_dirty;
+-(IBAction) column_as_name:(id) name;
 -(IBAction) issue_notification:(id) info;
 
 @end
@@ -263,7 +266,10 @@
 
 
 -(IBAction) options;
+-(IBAction) class_name;
 -(IBAction) classify;
+-(IBAction) class_const_get;
+-(IBAction) through_class;
 
 @end
 
@@ -279,6 +285,7 @@
 -(IBAction) first;
 -(IBAction) last;
 -(IBAction) all;
+-(IBAction) to_a;
 -(IBAction) length;
 -(IBAction) create:(id) options;
 -(IBAction) push:(id) object;
@@ -318,78 +325,24 @@
 @end
 
 
-@interface String
+@interface Debug
 
 
 
 
 
--(IBAction) humanize;
--(IBAction) titleize;
--(IBAction) demodulize;
--(IBAction) pluralize;
--(IBAction) singularize;
--(IBAction) underscore;
+-(IBAction) deep_const_get:(id) const;
 
 @end
 
 
-@interface Inflector
+@interface Module
 
 
 
 
 
--(IBAction) initialize;
--(IBAction) reset;
--(IBAction) uncountable:(id) word;
--(IBAction) singularize:(id) word;
--(IBAction) pluralize:(id) word;
--(IBAction) titleize;
-
-@end
-
-
-@interface NilClass
-
-
-
-
-
--(IBAction) titleize;
-
-@end
-
-
-@interface Array
-
-
-
-
-
--(IBAction) titleize;
-
-@end
-
-
-@interface Hash
-
-
-
-
-
--(IBAction) titleize;
-
-@end
-
-
-@interface Symbol
-
-
-
-
-
--(IBAction) titleize;
+-(IBAction) deep_const_get:(id) const;
 
 @end
 
@@ -417,8 +370,10 @@
 -(IBAction) limit:(id) limit;
 -(IBAction) all;
 -(IBAction) to_a;
+-(IBAction) reload;
 -(IBAction) do_select;
 -(IBAction) first;
+-(IBAction) last;
 -(IBAction) count;
 -(IBAction) delete;
 -(IBAction) to_sql;
@@ -435,6 +390,30 @@
 @end
 
 
+@interface SQLContext
+
+
+
+
+
+-(IBAction) to_s;
+-(IBAction) execute;
+
+@end
+
+
+@interface SQLDBAdapter: BaseDBAdapter
+
+
+
+
+
+-(IBAction) to_select_sql:(id) scope;
+-(IBAction) to_delete_sql:(id) scope;
+
+@end
+
+
 @interface SQLCondition
 
 
@@ -446,19 +425,67 @@
 @end
 
 
-@interface Relation
+@interface AbstractRelation
 
 
 
 
 
 -(IBAction) scoped;
+-(IBAction) column_name;
+-(IBAction) keys_for_to_s;
 -(IBAction) to_a;
--(IBAction) reload;
--(IBAction) collection;
--(IBAction) instance;
--(IBAction) init_instance:(id) instance;
+-(IBAction) count;
+-(IBAction) first;
+-(IBAction) unload;
+-(IBAction) maybe_reload;
 -(IBAction) build_from_instance:(id) associated_instance;
+
+@end
+
+
+@interface CollectionRelation: AbstractRelation
+
+
+
+
+
+-(IBAction) loaded;
+-(IBAction) push:(id) instance;
+-(IBAction) unload;
+-(IBAction) collection;
+-(IBAction) reload;
+-(IBAction) instance;
+
+@end
+
+
+@interface RelationArray
+
+
+
+
+
+-(IBAction) loaded;
+-(IBAction) push:(id) instance;
+-(IBAction) unload;
+-(IBAction) collection;
+-(IBAction) reload;
+-(IBAction) instance;
+
+@end
+
+
+@interface InstanceRelation: AbstractRelation
+
+
+
+
+
+-(IBAction) instance;
+-(IBAction) loaded;
+-(IBAction) unload;
+-(IBAction) reload;
 
 @end
 
@@ -473,6 +500,7 @@
 -(IBAction) joining_table_name;
 -(IBAction) joined_table_key;
 -(IBAction) joining_table_key;
+-(IBAction) joined_class;
 -(IBAction) type;
 -(IBAction) on_str;
 -(IBAction) build_on_str;
@@ -500,40 +528,28 @@
 
 
 -(IBAction) initialize:(id) db;
+-(IBAction) execute_sql:(id) sql;
 -(IBAction) begin_transaction;
 -(IBAction) end_transaction;
 -(IBAction) commit;
+-(IBAction) commit_writes;
 -(IBAction) rollback;
 -(IBAction) db_path;
 -(IBAction) db;
--(IBAction) execute_sql:(id) sql;
--(IBAction) queue;
+-(IBAction) thread_dictionary;
 
 @end
 
 
-@interface SQLContext
+@interface PersistFileError: Exception
 
 
 
 
 
--(IBAction) to_s;
--(IBAction) log:(id) msg;
--(IBAction) execute;
--(IBAction) build;
-
-@end
-
-
-@interface SQLDBAdapter: BaseDBAdapter
-
-
-
-
-
--(IBAction) to_select_sql:(id) scope;
--(IBAction) to_delete_sql:(id) scope;
+-(IBAction) documents_file:(id) file_name;
+-(IBAction) initWithCoder:(id) coder;
+-(IBAction) encodeWithCoder:(id) coder;
 
 @end
 
@@ -1167,6 +1183,7 @@
 
 
 
+-(IBAction) setup_sync;
 -(IBAction) setup_database;
 -(IBAction) setup_window;
 
@@ -1185,6 +1202,7 @@
 -(IBAction) forward_pressed;
 -(IBAction) update_date_label;
 -(IBAction) refresh_time_entries;
+-(IBAction) render_entries;
 
 @end
 
@@ -1198,7 +1216,6 @@
 
 -(IBAction) viewDidAppear:(id) animated;
 -(IBAction) login:(id) sender;
--(IBAction) send_login;
 -(IBAction) load_persisted_credentials;
 -(IBAction) save_persisted_credentials;
 -(IBAction) segue_to_time_entries;
@@ -1224,7 +1241,10 @@
 
 
 
-
+-(IBAction) duration_in_hours;
+-(IBAction) date;
+-(IBAction) start_time;
+-(IBAction) end_time;
 
 @end
 
@@ -1247,12 +1267,14 @@
 
 
 -(IBAction) initWithCoder:(id) coder;
--(IBAction) add_child;
+-(IBAction) add_child:(id) time_entry;
 -(IBAction) drawRect:(id) rect;
 -(IBAction) grid;
+-(IBAction) top_for_hour:(id) hour;
 -(IBAction) time_labels;
--(IBAction) hour_height;
 -(IBAction) half_hour_height;
+-(IBAction) grid_left;
+-(IBAction) grid_width;
 
 @end
 
@@ -1263,9 +1285,11 @@
 
 
 
--(IBAction) initWithFrame:(id) frame;
+-(IBAction) initialize:(id) entry;
+-(IBAction) size_to_time_entry;
 -(IBAction) drawRect:(id) rect;
 -(IBAction) load_xib;
+-(IBAction) label;
 
 @end
 

@@ -26,11 +26,11 @@ module ModelSync
 
         fetched_object = false
         if response.body
-          puts "GET--------"
-          puts response.body.to_str
-          puts "/GET-------"
+          # puts "GET--------"
+          # puts response.body.to_str
+          # puts "/GET-------"
           json = Json.parse(response.body.to_str)
-          puts "json>> #{json}"
+          #puts "json>> #{json}"
           fetched_object = update_or_create(json)
         end
         object.call(fetched_object) if object
@@ -78,57 +78,140 @@ module ModelSync
     end
   end
 
+  class NetworkQueue
 
+    PRIORITIES = [:auth, :sync, :other]
+
+    def setup_queue
+      @queue = {}
+      PRIORITIES.each { |key| @queue[key] = [] }
+      @queue
+    end
+
+    def queue
+      @queue || setup_queue
+    end
+
+    def add(proc, priority=:other)
+      queue[priority] << proc
+    end
+
+    def running?
+      @running == true
+    end
+
+    def execute
+      return if running?
+      @running = true
+      #puts "QUEUE======== EXECUTING QUEUE #{verbose_count}"
+      n = next_call
+      n.execute if n.respond_to? :execute
+    end
+
+    def unlock_and_continue
+      @running = false
+      execute
+    end
+
+    def verbose_count
+      PRIORITIES.map{|key| queue[key].count}.join(" ")
+    end
+
+    def count
+      PRIORITIES.map{|key| queue[key].count}.inject(0, :+)
+    end
+
+    private
+
+    def next_call
+      PRIORITIES.each do |key|
+        level_queue = queue[key]
+        unless level_queue.empty?
+          @pop = level_queue.delete_at(0)
+          #puts "QUEUE======== executing #{key} #{@pop.class} #{@pop.to_s}"
+          return @pop
+        end
+      end
+      #puts "QUEUE======== END OF QUEUE"
+      @running = false
+      nil
+    end
+  end
 
   class Network
 
-    @@open_connections = 0
+    def self.queue_status
+      @@network_queue.verbose_count
+    end
 
+    @@network_queue = NetworkQueue.new
+    @@open_calls = []
     [:get, :post, :put, :delete, :head, :patch].each do |http_verb|
      define_singleton_method(http_verb) do |cls, params, &block|
-        increment_open_connections
-      
-        url = Routing.action(cls, params)
-
-        puts "target URL:"
-        puts url
-
         payload = cls.payload if cls.respond_to?(:payload)
 
         options = {
-          payload: payload || "", 
+          payload: payload || "",
           headers: { "X-Csrf-Token" => App::Persistence['csrf']},
           format: :json
         }
 
-        BW::HTTP.send http_verb, url, options do |response|
-          if response.headers && response.headers.include?("X-Csrf-Token")
-            App::Persistence['csrf'] = response.headers["X-Csrf-Token"]
-            puts "RECIEVED CSRF-token : #{App::Persistence['csrf']}"
-          end
-          Network.decrement_open_connections
-          
-          if response.status_code == 401
-            Store.auth_action.call
-          end
+        instance_params = {
+          verb: http_verb,
+          url: Routing.action(cls, params),
+          callback: block,
+          options: options
+        }
 
-          block.call(response)
-        end
+        priority = params[:priority] || :other
+
+        new(instance_params).add_to_queue(priority)
      end
     end
 
-    def self.open_connections
-      @@open_connections
+    def initialize params
+      @verb = params[:verb]
+      @url = params[:url]
+      @callback = params[:callback]
+      @options = params[:options]
     end
 
-    def self.increment_open_connections
-      puts "CONNECTION OPENED"
-      @@open_connections = @@open_connections + 1
+    def execute
+      BW::HTTP.send @verb, @url, @options do |response|
+
+      puts "got response #{response.status_code} #{response.status_code.nil?} #{response.status_code.is_a?(Fixnum)}"
+        @response = response
+        watch_for_csrf_token
+
+        if response.status_code == 401
+          auth_action
+          add_to_queue
+        else
+          @callback.call(response)
+        end
+        @@network_queue.unlock_and_continue
+      end
     end
 
-    def self.decrement_open_connections
-      puts "CONNECTION CLOSED"
-      @@open_connections = @@open_connections - 1
+    def to_s
+      "#{@verb}: #{@url}"
+    end
+
+    def add_to_queue(priority=:other)
+      @@network_queue.add(self, priority)
+      @@network_queue.execute
+    end
+
+    private
+
+    def auth_action
+      Store.auth_action.call
+    end
+
+    def watch_for_csrf_token
+      if @response.headers && @response.headers.include?("X-Csrf-Token")
+        App::Persistence['csrf'] = @response.headers["X-Csrf-Token"]
+      end
     end
   end
 
@@ -151,7 +234,7 @@ module ModelSync
     def self.build_params params
       return "" if params.keys.count < 1
       str = "?"
-      params.each_with_index do |(k, v), i| 
+      params.each_with_index do |(k, v), i|
         str = "#{str}#{i>0?"&":""}#{k}=#{v}"
       end
       str
@@ -208,7 +291,7 @@ module ModelSync
       if object.class == Array
         return object.map { |child| foreignize(child) }
       end
-      
+
       object = object.dup
       object[:mobile_id] = object.delete(:id)
       object[:id] = object.delete(:remote_id)

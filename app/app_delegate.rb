@@ -11,7 +11,7 @@ class AppDelegate
   end
 
   def setup_sync
-    #ModelSync::Store.host = "http://time.alliants.co.uk"
+    ModelSync::Store.host = "http://Daniel.local:3000"
     ModelSync::Store.auth_action = -> { User.login }
   end
 

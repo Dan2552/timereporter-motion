@@ -3,15 +3,15 @@ class User < ModelSync::Base
   columns password: :string
 
   def self.login &after
-    after = after || Proc.new { }
+    after = after || Proc.new {}
     User.delete_all
-    User.get(:sign_in) do
+    User.get(action: :sign_in, priority: :auth) do
       user = User.first
       if user
         user.email = persisted_credentials[:email]
         user.password = persisted_credentials[:password]
-        
-        user.post(:sign_in) do
+
+        user.post(action: :sign_in, priority: :auth) do
           after.call logged_in?
         end
 
