@@ -16,8 +16,7 @@ Motion::Project::App.setup do |app|
   app.interface_orientations = [:portrait]
   app.pods do
     pod 'FMDB', :git => 'https://github.com/Dan2552/fmdb.git'
-    #pod 'SJNotificationViewController', :git => 'https://github.com/Dan2552/SJNotificationViewController.git'
+    pod 'SJNotificationViewController', :git => 'https://github.com/Dan2552/SJNotificationViewController.git'
     pod 'NUI'
-    pod 'TSMessages'
   end
 end
