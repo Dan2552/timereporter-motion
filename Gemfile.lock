@@ -1,9 +1,9 @@
 GIT
   remote: git@github.com:aceofspades/MotionModel.git
-  revision: 30e73723f3f7c1b4b6869a3dbe695973967e32c8
+  revision: b825a203b3055db9dfcf4bf3659a03e2aab5eabc
   branch: sql
   specs:
-    motion_model (0.4.1)
+    motion_model (0.5.0.pre2)
       bubble-wrap (~> 1.1.4)
       motion-support (>= 0.1.0)
 
@@ -48,8 +48,9 @@ GEM
     json (1.7.7)
     motion-colorize (1.0)
       colorize (~> 0.5.8)
-    motion-support (0.1.0)
-      bubble-wrap
+    motion-require (0.0.6)
+    motion-support (0.2.0)
+      motion-require (>= 0.0.6)
     motion_support (0.0.6)
       bubble-wrap
     multi_json (1.7.2)
