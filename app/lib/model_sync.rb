@@ -2,12 +2,14 @@ module ModelSync
 
   module SyncableColumns
     def self.included(base)
-      #base.extend(PrivateClassMethods)
       base.extend(PublicClassMethods)
     end
 
     module PublicClassMethods
       def columns(*fields)
+        unless self.respond_to?(:id)
+          add_field(:id, :integer)
+        end
         unless self.respond_to?(:remote_id)
           add_field(:remote_id, :integer)
         end
