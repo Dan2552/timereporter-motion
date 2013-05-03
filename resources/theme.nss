@@ -15,7 +15,7 @@
 @primaryBorderColor: #A2A2A2;
 @primaryBorderWidth: 1;
 
-Button {
+RedButton {
     background-color-top: #DD4B39;
     background-color-bottom: #B3330D;
     border-color: #000000;
@@ -25,18 +25,7 @@ Button {
     font-name: @secondaryFontName;
     text-shadow-color: #741e05;
     font-size: 18;
-    height: 37;
     corner-radius: 4;
-}
-LargeButton {
-    height: 50;
-    font-size: 20;
-    corner-radius: 10;
-}
-SmallButton {
-    height: 24;
-    font-size: 14;
-    corner-radius: 5;
 }
 Label {
     font-name: @secondaryFontName;
@@ -57,12 +46,18 @@ TopBarLabel {
     text-auto-fit: false;
 }
 NavigationBar {
-    font-name: @secondaryFontName;
+    font-name: HelveticaNeue-Light;
     font-size: 20;
-    font-color: @primaryFontColor;
+    font-color: #ffffff;
     text-shadow-color: clear;
-    background-color-top: @primaryBackgroundColorTop;
-    background-color-bottom: @primaryBackgroundColorBottomStrong;
+    background-color-top: #d24509;
+    background-color-bottom: #a63302;
+}
+SecondaryNavigationBar {
+    font-name: HelveticaNeue-Light;
+    font-size: 20;
+    font-color: #000000;
+    text-shadow-color: clear;
 }
 SegmentedControl {
     background-tint-color: @primaryBackgroundColorTop;
@@ -104,16 +99,9 @@ TextField {
     padding: 5;
     vertical-align: center;
 }
-UIBarButtonItem {
-    background-tint-color: @primaryBackgroundTintColor;
-    font-name: @secondaryFontNameBold;
-    font-color: @primaryFontColor;
-    text-shadow-color: clear;
-    font-size: 13;
-}
 LoginBox {
     border-width: @primaryBorderWidth;
 }
 LoginTitle {
-    
+
 }

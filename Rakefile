@@ -18,5 +18,6 @@ Motion::Project::App.setup do |app|
     pod 'FMDB', :git => 'https://github.com/Dan2552/fmdb.git'
     pod 'SJNotificationViewController', :git => 'https://github.com/Dan2552/SJNotificationViewController.git'
     pod 'NUI'
+    pod 'ViewDeck'
   end
 end

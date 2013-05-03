@@ -1,11 +1,24 @@
-class TimeEntriesController < UIViewController
+class TimeEntriesController < BaseViewController
   extend IB
   include TimeEntriesHelper
 
-  attr_accessor :selected_date
+  attr_accessor :selected_date, :deck_controller
 
-  outlet :selected_date_label
   outlet :calendar_view
+  outlet :date_navigation_bar
+
+  def self.present(sender)
+    center = self.from_storyboard
+    left = LeftMenuController.from_storyboard
+    deck_controller = IIViewDeckController.alloc.initWithCenterViewController(center, leftViewController:left, rightViewController:nil)
+    deck_controller.navigationControllerBehavior = IIViewDeckNavigationControllerIntegrated
+    deck_controller.delegateMode = IIViewDeckDelegateAndSubControllers
+    deck_controller.leftSize = 132
+    deck_controller.centerhiddenInteractivity = IIViewDeckCenterHiddenNotUserInteractiveWithTapToClose
+    center.deck_controller = deck_controller
+
+    sender.navigationController.pushViewController(deck_controller, animated:true)
+  end
 
   def viewDidAppear(animated)
     super
@@ -27,9 +40,9 @@ class TimeEntriesController < UIViewController
 
   def update_date_label
     if self.selected_date.today?
-      selected_date_label.text = "Today"
+      date_navigation_bar.title = "Today"
     else
-      selected_date_label.text = formatted_date(selected_date)
+      date_navigation_bar.title = formatted_date(selected_date)
     end
   end
 
@@ -40,7 +53,11 @@ class TimeEntriesController < UIViewController
   end
 
   def render_entries
-    #calendar_view.draw_entry
+    calendar_view.set_children TimeEntry.all.to_a
+  end
+
+  def menu_button_pressed
+    deck_controller.openLeftViewAnimated(true)
   end
 
 end
