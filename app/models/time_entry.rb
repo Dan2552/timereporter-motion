@@ -12,9 +12,9 @@ class TimeEntry < ModelSync::Base
   def self.for_date(date, duration=:week)
     duration = :week unless duration.present?
     duration = :week unless ALLOWED_DURATIONS.include? duration.to_sym
-    
+
     start_date = date.send("start_of_#{duration}").start_of_day
-    end_date = (date.send("end_of_#{duration}") - 2).end_of_day
+    end_date = date.send("end_of_#{duration}").end_of_day
 
     where(entry_datetime: { between: start_date.to_i..end_date.to_i })
   end
@@ -32,7 +32,7 @@ class TimeEntry < ModelSync::Base
   end
 
   def end_time
-    start_time + duration_in_hours.hours 
+    start_time + duration_in_hours.hours
   end
-  
+
 end

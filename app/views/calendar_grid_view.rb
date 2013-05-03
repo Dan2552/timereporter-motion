@@ -6,17 +6,6 @@ class CalendarGridView < UIView
     super
   end
 
-  def add_children time_entries=[]
-    time_entries.each { |entry| add_child entry }
-  end
-
-  def add_child time_entry
-    sv = TimeEntryView.new(time_entry)
-    sv.backgroundColor = UIColor.clearColor
-    sv.time_entry = time_entry
-    addSubview(sv)
-  end
-
   def drawRect rect
     grid
     time_labels
@@ -25,6 +14,43 @@ class CalendarGridView < UIView
     end
 
     super
+  end
+
+  def set_children time_entries=[]
+    remove_children
+    time_entries.each { |entry| add_child(entry) }
+  end
+
+  def hour_height n=1
+    45 * n
+  end
+
+  def grid_width
+    230
+  end
+
+  private
+
+  def children
+    @children = @children || []
+  end
+
+  def add_child time_entry
+    position = [grid_left, top_for_date(time_entry.entry_datetime)]
+    size = [grid_width, hour_height(time_entry.duration_in_hours)]
+
+
+    sv = TimeEntryView.alloc.initWithFrame(Rect(position, size))
+    sv.backgroundColor = UIColor.clearColor
+    sv.project_name = "test"
+
+    addSubview(sv)
+    children << sv
+  end
+
+  def top_for_date date
+    hour = date.hour + (date.min / 60.0)
+    top_for_hour hour
   end
 
   def grid
@@ -61,10 +87,6 @@ class CalendarGridView < UIView
     addSubview label
   end
 
-  def hour_height n=1
-    45 * n
-  end
-
   def half_hour_height
     hour_height / 2
   end
@@ -73,8 +95,9 @@ class CalendarGridView < UIView
     65
   end
 
-  def grid_width
-    230   
+  def remove_children
+    children.each { |subview| subview.removeFromSuperview }
+    children.clear
   end
 
 end
