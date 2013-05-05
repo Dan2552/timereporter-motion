@@ -282,11 +282,18 @@ module ModelSync
         return object.map { |child| localize(child) }
       end
 
-      object = object.dup
-      object["remote_id"] = object.delete("id")
-      object["remote_updated_at"] = object.delete("updated_at")
-      object["remote_created_at"] = object.delete("created_at")
-      object
+      local_object = object.dup
+
+      object.each do |key, value|
+        if key.end_with?("_id") || key == "id"
+          local_object.delete(key)
+          local_object["remote_#{key}"] = value
+        end
+      end
+
+      local_object["remote_updated_at"] = local_object.delete("updated_at")
+      local_object["remote_created_at"] = local_object.delete("created_at")
+      local_object
     end
 
     def self.foreignize object
@@ -294,10 +301,19 @@ module ModelSync
         return object.map { |child| foreignize(child) }
       end
 
-      object = object.dup
-      object[:mobile_id] = object.delete(:id)
-      object[:id] = object.delete(:remote_id)
-      object
+      foreign_object = object.dup
+
+      object.each do |key, value|
+        if key.start_with? "remote_"
+          stripped_key = key[7..-1].to_sym
+          mobile_value = object[stripped_key]
+          foreign_object[stripped_key] = value
+          foreign_object["mobile_#{stripped_key}"] = mobile_value
+          foreign_object.delete(key)
+        end
+      end
+
+      foreign_object
     end
   end
 
