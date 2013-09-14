@@ -15,7 +15,6 @@ module ActiveRecordLike
 
   def attributes= set_attrs
     set_attrs.each do |a, new_value|
-      puts "(attributes) #{a}= #{new_value} (#{new_value.class})"
       self.send("#{a}=", new_value) if respond_to?("#{a}=")
     end
   end
@@ -26,15 +25,6 @@ module ActiveRecordLike
   end
 
   module ClassMethods
-
-    # def new attrs
-    #   instance = super()
-    #   instance.attributes = attrs
-    # end
-
-    # def create attrs
-    #   new(attrs).save
-    # end
 
     def delete_all
       all.each { |r| r.delete }

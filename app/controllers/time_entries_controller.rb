@@ -35,7 +35,6 @@ class TimeEntriesController < BaseViewController
 
   def refresh_time_entries
     TimeEntry.get(date: formatted_date(selected_date)) do |success|
-      puts "!?"
       #render_entries
     end
   end

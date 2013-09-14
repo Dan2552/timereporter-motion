@@ -14,7 +14,7 @@ end
 
 Motion::Project::App.setup do |app|
   # Use `rake config' to see complete project settings.
-  app.name = 'TimeMotion'
+  app.name = 'Timereporter'
 
   app.interface_orientations = [:portrait]
 
