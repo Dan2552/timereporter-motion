@@ -1,9 +1,7 @@
 class AppDelegate
-  @@nui_settings = NUISettings.initWithStylesheet("theme")
-  MODELS = [TimeEntry, User]
+  #MODELS = [TimeEntry, User]
 
   def application(application, didFinishLaunchingWithOptions:launchOptions)
-    @nui = NUIAppearance.init
     setup_sync
     setup_database
     setup_window
@@ -11,17 +9,20 @@ class AppDelegate
   end
 
   def setup_sync
-    ModelSync::Store.host = "http://Daniel.local:3000"
-    ModelSync::Store.auth_action = -> { User.login }
+    SyncModel::Settings.host = "http://time.alliants.co.uk"
+    SyncModel::Settings.auth_action = -> { User.login }
   end
 
   def setup_database
-    db = 'data.db'
-    db = 'test.db' if RUBYMOTION_ENV == 'test'
-    MotionModel::Store.config(MotionModel::FMDBAdapter.new(db))
-    MODELS.each do |model|
-      model.create_table unless model.table_exists?
-    end
+    # db = 'data.db'
+    # db = 'test.db' if RUBYMOTION_ENV == 'test'
+    # MotionModel::Store.config(MotionModel::FMDBAdapter.new(db))
+    # MODELS.each do |model|
+    #   model.create_table unless model.table_exists?
+    # end
+
+    documents_path         = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, true)[0]
+    NanoStore.shared_store = NanoStore.store(:file, documents_path + "/nano.db")
   end
 
   def setup_window

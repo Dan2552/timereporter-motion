@@ -38,7 +38,7 @@ class UserController < UIViewController
   end
 
   def segue_to_time_entries
-    TimeEntriesController.present(self)
+    performSegueWithIdentifier("login", sender:self)
   end
 
 end

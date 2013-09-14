@@ -1,26 +1,10 @@
-
 PODS:
-- FMDB (2.0x)
-- NUI (0.2.7)
-- SJNotificationViewController (1.0)
-- ViewDeck (2.2.10)
+  - NanoStore (2.6.4)
 
 DEPENDENCIES:
-- FMDB (from `https://github.com/Dan2552/fmdb.git')
-- NUI
-- SJNotificationViewController (from `https://github.com/Dan2552/SJNotificationViewController.git')
-- ViewDeck
-
-EXTERNAL SOURCES:
-  FMDB:
-    :git: https://github.com/Dan2552/fmdb.git
-  SJNotificationViewController:
-    :git: https://github.com/Dan2552/SJNotificationViewController.git
+  - NanoStore (~> 2.6.0)
 
 SPEC CHECKSUMS:
-  FMDB: 65353c889399f5fb1391e700c3dea6f37b627624
-  NUI: bc96741235be530960404a7c7b7aca8d7c2be81c
-  SJNotificationViewController: 66d51ec7bf67e87c168ed9130727d9011692c2de
-  ViewDeck: bc694361ce614ff16af0955f106ab4268f9dd2e1
+  NanoStore: 73d29e30e1e7f253f719c6ad1d60181ebcf1b5be
 
-COCOAPODS: 0.16.4
+COCOAPODS: 0.24.0

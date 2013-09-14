@@ -1,11 +1,11 @@
-class TimeEntry < ModelSync::Base
-  columns created_at: :datetime
-  columns updated_at: :datetime
-  columns entry_datetime: :datetime
-  columns duration: :integer
-  columns user_id: :integer
-  columns project_id: :integer
-  columns comment: :string
+class TimeEntry < SyncModel::Base
+  attribute :created_at
+  attribute :updated_at
+  attribute :entry_datetime
+  attribute :duration
+  attribute :user_id
+  attribute :project_id
+  attribute :comment
 
   ALLOWED_DURATIONS = [:day, :week, :month, :year]
 
@@ -13,7 +13,7 @@ class TimeEntry < ModelSync::Base
     duration = :week unless duration.present?
     duration = :week unless ALLOWED_DURATIONS.include? duration.to_sym
 
-    start_date = date.send("start_of_#{duration}").start_of_day
+    start_date = date.send("start_of_#{duration}").beginning_of_day
     end_date = date.send("end_of_#{duration}").end_of_day
 
     where(entry_datetime: { between: start_date.to_i..end_date.to_i })

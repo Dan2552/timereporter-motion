@@ -1,6 +1,6 @@
-class User < ModelSync::Base
-  columns email: :string
-  columns password: :string
+class User < SyncModel::Base
+  attribute :email
+  attribute :password
 
   def self.login &after
     after = after || Proc.new {}

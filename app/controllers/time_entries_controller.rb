@@ -7,24 +7,11 @@ class TimeEntriesController < BaseViewController
   outlet :calendar_view
   outlet :date_navigation_bar
 
-  def self.present(sender)
-    center = self.from_storyboard
-    left = LeftMenuController.from_storyboard
-    deck_controller = IIViewDeckController.alloc.initWithCenterViewController(center, leftViewController:left, rightViewController:nil)
-    deck_controller.navigationControllerBehavior = IIViewDeckNavigationControllerIntegrated
-    deck_controller.delegateMode = IIViewDeckDelegateAndSubControllers
-    deck_controller.leftSize = 132
-    deck_controller.centerhiddenInteractivity = IIViewDeckCenterHiddenNotUserInteractiveWithTapToClose
-    center.deck_controller = deck_controller
-
-    sender.navigationController.pushViewController(deck_controller, animated:true)
-  end
-
   def viewDidAppear(animated)
     super
     self.selected_date = NSDate.new
     update_date_label
-    render_entries
+    #render_entries
     refresh_time_entries
   end
 
@@ -48,7 +35,8 @@ class TimeEntriesController < BaseViewController
 
   def refresh_time_entries
     TimeEntry.get(date: formatted_date(selected_date)) do |success|
-      render_entries
+      puts "!?"
+      #render_entries
     end
   end
 

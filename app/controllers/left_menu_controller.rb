@@ -1,3 +1,0 @@
-class LeftMenuController < BaseViewController
-
-end

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0460"
+   LastUpgradeVersion = "0500"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9833FB614F54482686269AC5"
+               BlueprintIdentifier = "AAFCBDA04B8A4DE6A5CA26E3"
                BuildableName = "libib.a"
                BlueprintName = "ib"
                ReferencedContainer = "container:ib.xcodeproj">

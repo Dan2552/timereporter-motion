@@ -29,3 +29,5 @@ vendor/ruby
 *.007
 
 *.000
+
+.bundle/config
