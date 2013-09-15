@@ -5,5 +5,5 @@ gem 'motion-cocoapods'
 gem "nano-store"
 gem "ib"
 gem "bubble-wrap"
-gem "sugarcube"
+gem "sugarcube", require: "sugarcube-classic"
 gem "motion-support"

@@ -2,8 +2,13 @@ module ActiveRecordLike
 
   def self.included(base)
     base.extend(ClassMethods)
-  end
 
+    base.class_eval do
+      class << self
+        alias_method :where, :find
+      end
+    end
+  end
 
   def attributes
     hash = {}
@@ -25,6 +30,12 @@ module ActiveRecordLike
   end
 
   module ClassMethods
+
+    # def find *args
+    #   #where(args).first
+
+    #   "potatoes"
+    # end
 
     def delete_all
       all.each { |r| r.delete }

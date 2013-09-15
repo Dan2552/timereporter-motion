@@ -9,6 +9,7 @@ begin
   require 'motion_model'
   require 'motion_model/sql'
   require 'motion_model/fmdb'
+
 rescue LoadError
 end
 
@@ -17,8 +18,4 @@ Motion::Project::App.setup do |app|
   app.name = 'Timereporter'
 
   app.interface_orientations = [:portrait]
-
-  app.pods do
-    pod 'NanoStore', '~> 2.6.0'
-  end
 end

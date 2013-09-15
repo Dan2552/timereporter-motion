@@ -1,6 +1,11 @@
 module SyncModel
   class Base < NanoStore::Model
     include ActiveRecordLike
+    include Relations
+
+    # def self.find
+    #   "bananas"
+    # end
 
     def to_hash
       attributes.clone
