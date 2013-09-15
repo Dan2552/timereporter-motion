@@ -2,7 +2,7 @@ module SyncModel
   class Json
     def self.parse string
       parsed = BW::JSON.parse string
-      localize(parsed)
+      localize(convert_types(parsed))
     end
 
     def self.localize object
@@ -42,6 +42,22 @@ module SyncModel
       end
 
       foreign_object
+    end
+
+    private
+
+    def self.convert_types object
+      if object.class == Array
+        return object.map { |child| convert_types(child) }
+      end
+
+      converted_object = object.dup
+
+      object.each do |key, value|
+        converted_object[key] = DataTypeParser.new(value).parse
+      end
+
+      converted_object
     end
   end
 end
