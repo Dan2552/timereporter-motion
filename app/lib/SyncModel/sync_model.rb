@@ -12,7 +12,7 @@ module SyncModel
 
     def self.attributes
       attributes = super
-      remote_attrs = [:remote_id, :remote_updated_at, :remote_created_at]
+      remote_attrs = [:id, :remote_id, :remote_updated_at, :remote_created_at]
 
       attributes.each do |a|
         if a.to_s.end_with?("_id") && (!a.to_s.start_with?("remote_"))
@@ -42,7 +42,7 @@ module SyncModel
       end
 
       remote_id = params[:remote_id] || params["remote_id"]
-      remote = find(remote_id: remote_id).first
+      remote = find(remote_id: remote_id)
 
       if remote
         remote.update(params)
