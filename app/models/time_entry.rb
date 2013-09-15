@@ -1,4 +1,8 @@
 class TimeEntry < SyncModel::Base
+
+  belongs_to :project
+  belongs_to :user
+
   attribute :created_at
   attribute :updated_at
   attribute :entry_datetime

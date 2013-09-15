@@ -1,6 +1,7 @@
 module SyncModel
   class Base < NanoStore::Model
     include ActiveRecordLike
+    include Relations
 
     def to_hash
       attributes.clone
