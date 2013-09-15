@@ -1,5 +1,4 @@
 class AppDelegate
-  #MODELS = [TimeEntry, User]
 
   def application(application, didFinishLaunchingWithOptions:launchOptions)
     setup_sync
@@ -14,13 +13,6 @@ class AppDelegate
   end
 
   def setup_database
-    # db = 'data.db'
-    # db = 'test.db' if RUBYMOTION_ENV == 'test'
-    # MotionModel::Store.config(MotionModel::FMDBAdapter.new(db))
-    # MODELS.each do |model|
-    #   model.create_table unless model.table_exists?
-    # end
-
     documents_path         = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, true)[0]
     NanoStore.shared_store = NanoStore.store(:file, documents_path + "/nano.db")
   end
