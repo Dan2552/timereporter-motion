@@ -3,22 +3,33 @@ class CalendarGridView < UIView
   include TimeEntriesHelper
 
   def initWithCoder coder
+    setup_size
     super
   end
 
-  def drawRect rect
-    grid
-    time_labels
+  def setup_size
+    height = hour_height(25)
+    frame = self.frame
+    frame.size.height = height
+    self.frame = frame
     if superview.is_a? UIScrollView
       superview.contentSize = frame.size
     end
+  end
 
+  def drawRect rect
+    return if @done
+    setup_size
+    grid
+    time_labels
+
+    @done = true
     super
   end
 
   def set_children time_entries=[]
     remove_children
-    time_entries.each { |entry| add_child(entry) }
+    time_entries.to_a.each { |entry| add_child(entry) }
   end
 
   def hour_height n=1
