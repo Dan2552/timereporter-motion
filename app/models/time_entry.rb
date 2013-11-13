@@ -11,16 +11,8 @@ class TimeEntry < SyncModel::Base
   attribute :project_id
   attribute :comment
 
-  ALLOWED_DURATIONS = [:day, :week, :month, :year]
-
   def self.for_date(date, duration=:week)
-    duration = :week unless duration.present?
-    duration = :week unless ALLOWED_DURATIONS.include? duration.to_sym
-
-    start_date = date.send("start_of_#{duration}").beginning_of_day
-    end_date = date.send("end_of_#{duration}").end_of_day
-
-    where(entry_datetime: { between: start_date.to_i..end_date.to_i })
+    where(entry_datetime: Duration.new(duration).get_range(date))
   end
 
   def duration_in_hours
