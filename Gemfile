@@ -5,6 +5,6 @@ gem 'motion-cocoapods'
 gem "nano-store"
 gem "ib"
 gem "bubble-wrap"
-gem "sugarcube", require: "sugarcube-classic"
+gem 'sugarcube', :require => 'sugarcube-all'
 gem "motion-support"
 gem 'motion-sync-model', :git => 'git@github.com:Dan2552/motion-sync-model.git'
