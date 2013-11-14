@@ -4,49 +4,62 @@ class TimeEntriesController < BaseViewController
 
   attr_accessor :selected_date, :deck_controller
 
-  outlet :calendar_view
+  outlet :reusable_hour_view
+  outlet :reusable_time_entry_view
   outlet :date_label_button
-
+  outlet :entry_view
 
   def viewDidAppear(animated)
     super
-    self.selected_date = NSDate.new
-    #update_date_label
-    render_entries
+    setup_entry_view
+    setup_selected_date
     refresh_time_entries
     debug self
   end
 
+  def setup_entry_view
+    entry_view.reusable_hour_view = reusable_hour_view
+    entry_view.reusable_time_entry_view = reusable_time_entry_view
+    entry_view.data_source = self
+    entry_view.refresh
+  end
+
+  def setup_selected_date
+    self.selected_date = NSDate.new
+  end
+
   def back_pressed
-    self.selected_date = self.selected_date - 1.day
-    update_date_label
+    update_selected_date(self.selected_date - 1.day)
   end
 
   def forward_pressed
-    self.selected_date = self.selected_date + 1.day
-    update_date_label
+    update_selected_date(self.selected_date + 1.day)
   end
 
-  def update_date_label
+  def update_selected_date(new_date)
+    self.selected_date = new_date
+
     if self.selected_date.today?
       date_label_button.titleLabel.text = "Today"
     else
       date_label_button.titleLabel.text = formatted_date(selected_date)
     end
+
+    entry_view.refresh
   end
 
   def refresh_time_entries
     TimeEntry.get(date: formatted_date(selected_date)) do |success|
-      render_entries
+      entry_view.refresh
     end
-  end
-
-  def render_entries
-    calendar_view.set_children [TimeEntry.first || nil].compact
   end
 
   def menu_button_pressed
     deck_controller.openLeftViewAnimated(true)
+  end
+
+  def entry_view_data
+    TimeEntry.for_date(self.selected_date, :day)
   end
 
 end

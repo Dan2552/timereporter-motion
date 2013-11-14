@@ -1,0 +1,3 @@
+class TimeViewEntry < TimeViewBase
+
+end
