@@ -1,39 +1,42 @@
 class User < SyncModel::Base
-  attribute :email
-  attribute :password
 
-  def self.login &after
-    after = after || Proc.new {}
-    User.delete_all
-    User.get(action: :sign_in, priority: :auth) do
-      user = User.first
-      if user
-        user.email = persisted_credentials[:email]
-        user.password = persisted_credentials[:password]
+#   has_many :time_entries
 
-        user.post(action: :sign_in, priority: :auth) do
-          after.call logged_in?
-        end
+#   attribute :email
+#   attribute :password
 
-      else
-        after.call logged_in?
-      end
-    end
-  end
+  # def self.login &after
+  #   after = after || Proc.new {}
+  #   User.delete_all
+  #   User.get(action: :sign_in, priority: :auth) do
+  #     user = User.first
+  #     if user
+  #       user.email = persisted_credentials[:email]
+  #       user.password = persisted_credentials[:password]
 
-  def self.logged_in?
-    (User.count == 1 && User.first.email.length > 0)
-  end
+  #       user.post(action: :sign_in, priority: :auth) do
+  #         after.call logged_in?
+  #       end
 
-  def self.persisted_credentials
-    {
-      email:     App::Persistence['username'],
-      password:  App::Persistence['password']
-    }
-  end
+  #     else
+  #       after.call logged_in?
+  #     end
+  #   end
+  # end
 
-  def self.persisted_credentials= params
-    App::Persistence['username'] = params[:email]
-    App::Persistence['password'] = params[:password]
-  end
+  # def self.logged_in?
+  #   (User.count == 1 && User.first.email.length > 0)
+  # end
+
+  # def self.persisted_credentials
+  #   {
+  #     email:     App::Persistence['username'],
+  #     password:  App::Persistence['password']
+  #   }
+  # end
+
+  # def self.persisted_credentials= params
+  #   App::Persistence['username'] = params[:email]
+  #   App::Persistence['password'] = params[:password]
+  # end
 end

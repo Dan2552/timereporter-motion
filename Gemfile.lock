@@ -1,6 +1,5 @@
-GIT
-  remote: git@github.com:Dan2552/motion-sync-model.git
-  revision: c665a728b72edf0f55d03c79b83f96a4f05e0a93
+PATH
+  remote: ~/projects/motion-sync-model
   specs:
     motion-sync-model (0.1.0)
       bubble-wrap

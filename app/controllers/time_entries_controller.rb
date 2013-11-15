@@ -12,20 +12,17 @@ class TimeEntriesController < BaseViewController
   def viewDidAppear(animated)
     super
     setup_entry_view
-    setup_selected_date
     refresh_time_entries
-    debug self
   end
 
   def setup_entry_view
     entry_view.reusable_hour_view = reusable_hour_view
     entry_view.reusable_time_entry_view = reusable_time_entry_view
     entry_view.data_source = self
-    entry_view.refresh
   end
 
-  def setup_selected_date
-    self.selected_date = NSDate.new
+  def selected_date
+    @selected_date ||= NSDate.new
   end
 
   def back_pressed
@@ -39,7 +36,7 @@ class TimeEntriesController < BaseViewController
   def update_selected_date(new_date)
     self.selected_date = new_date
 
-    if self.selected_date.today?
+    if selected_date.today?
       date_label_button.titleLabel.text = "Today"
     else
       date_label_button.titleLabel.text = formatted_date(selected_date)

@@ -9,12 +9,11 @@
 -(IBAction) setup_sync;
 -(IBAction) setup_database;
 -(IBAction) setup_window;
+-(IBAction) test_seed;
 
 @end
 
 @interface BaseViewController: UIViewController
--(IBAction) viewDidAppear:(id) animated;
--(IBAction) view_did_appear;
 -(IBAction) preferredStatusBarStyle;
 
 @end
@@ -26,9 +25,9 @@
 @property IBOutlet id date_label_button;
 @property IBOutlet id entry_view;
 
--(IBAction) view_did_appear;
+-(IBAction) viewDidAppear:(id) animated;
 -(IBAction) setup_entry_view;
--(IBAction) setup_selected_date;
+-(IBAction) selected_date;
 -(IBAction) back_pressed;
 -(IBAction) forward_pressed;
 -(IBAction) update_selected_date:(id) new_date;
@@ -63,11 +62,6 @@
 @end
 
 @interface TimeEntry: SyncModel::Base
--(IBAction) duration_in_hours;
--(IBAction) date;
--(IBAction) start_time;
--(IBAction) end_time;
-
 @end
 
 @interface User: SyncModel::Base
@@ -83,6 +77,7 @@
 -(IBAction) setup_frame;
 -(IBAction) refresh;
 -(IBAction) data_source;
+-(IBAction) load_data;
 -(IBAction) new_entry:(id) options;
 -(IBAction) new_hour:(id) options;
 -(IBAction) reusable_hour_view;
@@ -90,6 +85,8 @@
 @end
 
 @interface TimeViewEntry: TimeViewBase
+-(IBAction) text;
+
 @end
 
 @interface TimeViewHour: TimeViewBase

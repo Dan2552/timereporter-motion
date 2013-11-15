@@ -45,7 +45,8 @@ class TimeViewContainer < UIScrollView
       duration_in_hours = entry.minutes / 60.0
       new_entry(
         y: 10 + (entry_hour * hour_height),
-        height: duration_in_hours * hour_height
+        height: duration_in_hours * hour_height,
+        text: "Apples - #{duration_in_hours}"
       )
     end
   end
