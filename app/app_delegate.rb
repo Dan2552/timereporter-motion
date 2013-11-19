@@ -34,19 +34,9 @@ class AppDelegate
 
   def test_seed
     TimeEntry.delete_all
-    @monday = Time.now.beginning_of_week
-    @tuesday = @monday + 1.day
-    @wednes = @tuesday + 1.day
-    TimeEntry.create(time: @tuesday + 1.hours, minutes: 120)
-    TimeEntry.create(time: @tuesday + 3.hours, minutes: 30)
-    TimeEntry.create(time: @tuesday + 6.hours, minutes: 45)
-    TimeEntry.create(time: @monday, minutes: 60)
-    TimeEntry.create(time: @wednes + 16.hours, minutes: 60*3)
-    TimeEntry.create(time: @wednes + 15.minutes, minutes: 60)
-    TimeEntry.create(time: @wednes + 1.day + 1.hours, minutes: 120)
-    TimeEntry.create(time: @wednes + 1.day + 3.hours, minutes: 30)
-    TimeEntry.create(time: @wednes + + 2.days + 6.hours, minutes: 45)
-    TimeEntry.create(time: @wednes + 2.days, minutes: 60)
-    TimeEntry.create(time: @wednes + 2.days + 16.hours, minutes: 60*3)
+    today = Time.now.beginning_of_day
+    TimeEntry.create(time: today + 0.hours, minutes: 60)
+    TimeEntry.create(time: today + 3.hours, minutes: 60)
+    TimeEntry.create(time: today + 10.hours, minutes: 30)
   end
 end

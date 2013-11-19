@@ -46,9 +46,9 @@ class TimeEntriesController < BaseViewController
   end
 
   def refresh_time_entries
-    TimeEntry.get(date: formatted_date(selected_date)) do |success|
-      entry_view.refresh
-    end
+    # TimeEntry.get(date: formatted_date(selected_date)) do |success|
+    #   entry_view.refresh
+    # end
   end
 
   def menu_button_pressed

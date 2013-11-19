@@ -86,6 +86,7 @@
 
 @interface TimeViewEntry: TimeViewBase
 -(IBAction) text;
+-(IBAction) getShakeAnimation;
 
 @end
 
